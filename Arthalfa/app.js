@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import { stablishDbConnection } from "./db/connection.js";
 import dotenv from 'dotenv';
 import productRoutes from './routes/productRoutes.js'
+import { scheduleJob } from 'node-schedule';
 const app = express();
 
 dotenv.config();
@@ -21,6 +22,16 @@ stablishDbConnection();
 
 // Routes
 app.use("",productRoutes);
+
+app.get("/warm",(req,res)=>{
+    res.send("I'm here to keep the server warm");
+})
+const job = scheduleJob('* */14 * * * *', function(){ // sending request in every 14 min
+    // Send a request 
+    if(process.env.NODE_ENV == 'production'){
+       exec('./scripts/warm.sh',(err,stdout,stderr)=>{})
+    }
+});
 
 app.listen(process.env.APP_PORT || 8989,()=>{
     process.stdout.write(`Server is up and running on ${process.env.APP_PORT || 8989}\n`);
