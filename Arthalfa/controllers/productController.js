@@ -6,7 +6,7 @@
  * DELETE /products/:id - Delete a product by ID.
  */
 
-import { Sequelize, DataTypes, Op } from "sequelize";
+import { Sequelize, DataTypes, Op, Transaction } from "sequelize";
 import ProductModel from "../models/Product.js"; 
 import { config } from "dotenv";
 config();
