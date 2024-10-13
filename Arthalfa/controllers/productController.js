@@ -76,7 +76,7 @@ export const getProduct = async (req,res) => {
         const {id} = req.params;
         
         const existingProduct = await sequelize.transaction({
-            isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
+            isolationLevel: Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
           },async function (transaction) {
             const existingProduct = await Product.findByPk(id,{attributes: {exclude: ['createdAt','updatedAt']}},{ transaction });
             return existingProduct;
@@ -108,7 +108,9 @@ export const updateProduct = async (req,res) => {
             return res.status(404).json({message: "The product with id " + id + " does not exists"});
         }
         
-        await sequelize.transaction(async function (transaction) {
+        await sequelize.transaction({
+            isolationLevel: Transaction.ISOLATION_LEVELS.SERIALIZABLE,
+          },async function (transaction) {
             await Product.update({
                 ...(name && {name}),
                 ...(price && {price}),
@@ -127,7 +129,7 @@ export const updateProduct = async (req,res) => {
 
 export const deleteProduct = async (req,res) => {
     try{
-        const {id} = req.params;
+        const { id } = req.params;
 
         const existingProduct = await sequelize.transaction({
             isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
