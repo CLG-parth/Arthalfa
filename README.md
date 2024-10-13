@@ -17,8 +17,8 @@ This is a RESTful API built using **Node.js** and **Express.js** for managing pr
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/product-management-api.git
-    cd product-management-api
+    git clone git@github.com:CS-parth/DistributedLocking.git
+    cd Arthalfa
     ```
 
 2. Install the required dependencies:
