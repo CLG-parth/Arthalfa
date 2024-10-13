@@ -5,6 +5,7 @@ import { stablishDbConnection } from "./db/connection.js";
 import dotenv from 'dotenv';
 import productRoutes from './routes/productRoutes.js'
 import { scheduleJob } from 'node-schedule';
+import { exec } from 'child_process';
 const app = express();
 
 dotenv.config();
