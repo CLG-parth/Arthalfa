@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 stablishDbConnection();
 
 // Routes
-app.use("",productRoutes);
+app.route("",productRoutes);
 
 app.get("/warm",(req,res)=>{
     res.send("I'm here to keep the server warm");
